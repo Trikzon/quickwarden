@@ -1,0 +1,36 @@
+body {
+    overflow: hidden;
+}
+
+#search {
+    min-width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0.25rem;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+}
+
+.result {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.result img {
+    width: 32px;
+    height: 32px;
+}
+
+.result .name {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-left: 1rem;
+}
+
+.result .username {
+    font-size: 1rem;
+    margin-left: 1rem;
+}
