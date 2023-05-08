@@ -28,7 +28,15 @@ const POPUP_BROWSER_WINDOW_OPTIONS: BrowserWindowConstructorOptions = {
 const bitwarden = new Bitwarden();
 let window: BrowserWindow | null = null;
 
+function isWindowOpen(): boolean {
+    return window !== null && !window.isDestroyed();
+}
+
 function openLoginPopupWindow() {
+    if (isWindowOpen()) {
+        window?.focus();
+        return;
+    }
     window = new BrowserWindow({
         webPreferences: {
             preload: LOGIN_POPUP_PRELOAD_WEBPACK_ENTRY,
@@ -49,6 +57,10 @@ function openSearchPopupWindow() {
             openLoginPopupWindow();
             return;
         }
+        if (isWindowOpen()) {
+            window?.close();
+            return;
+        }
         bitwarden.sync();
 
         window = new BrowserWindow({
@@ -58,13 +70,16 @@ function openSearchPopupWindow() {
             ...POPUP_BROWSER_WINDOW_OPTIONS
         });
         window.loadURL(SEARCH_POPUP_WEBPACK_ENTRY);
+
+        window.on('blur', () => {
+            window.close();
+        });
     });
 }
 
 ipcMain.handle('loginWithApi', async (_event, clientId: string, clientSecret: string, masterPassword: string) => {
     const result = await bitwarden.loginWithApi(clientId, clientSecret, masterPassword);
     if (result) {
-        window?.close();
         openSearchPopupWindow();
     }
     return result;

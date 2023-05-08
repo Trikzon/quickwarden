@@ -31,10 +31,12 @@ rememberApiKeyCheckbox.addEventListener('click', () => {
 
 loginButton.addEventListener('click', () => {
     window.bitwarden.loginWithApi(clientIdInput.value, clientSecretInput.value, passwordInput.value).then((success) => {
-        window.localStorage.setItem('client_id', clientIdInput.value);
-        window.localStorage.setItem('client_secret', clientSecretInput.value);
         if (!success) {
             invalidWarning.classList.remove('hidden');
+        } else {
+            window.localStorage.setItem('client_id', clientIdInput.value);
+            window.localStorage.setItem('client_secret', clientSecretInput.value);
+            window.close();
         }
     }).catch((_error) => {
         invalidWarning.classList.remove('hidden');
