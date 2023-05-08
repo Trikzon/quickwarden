@@ -18,8 +18,17 @@ function search(query: string) {
             if (item.login === undefined) { continue; }
             if (item.name === undefined) { continue; }
 
+            const containerDiv = document.createElement('div');
+            containerDiv.classList.add('container');
+            resultsDiv.appendChild(containerDiv);
+
+            const spacer = document.createElement('div');
+            spacer.classList.add('spacer');
+            containerDiv.appendChild(spacer);
+
             const resultDiv = document.createElement('div');
             resultDiv.classList.add('result');
+            containerDiv.appendChild(resultDiv);
 
             const uri = new URL(item.login.uris?.[0]?.uri || 'https://example.com');
             const icon = document.createElement('img');
@@ -39,9 +48,8 @@ function search(query: string) {
             username.classList.add('username');
             username.textContent = item.login.username || '';
             info.appendChild(username);
-
-            resultsDiv.appendChild(resultDiv);
         }
+        document.getElementsByClassName('container')[0]?.classList.add('selected');
     });
 }
 
