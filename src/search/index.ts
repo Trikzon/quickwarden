@@ -1,50 +1,76 @@
 import { BitwardenItem } from '../daemon/bitwarden';
+import '../common.css';
 import './index.css';
 
+const clearSearchButton = document.getElementById('clear-search');
 const searchInput = document.getElementById('search') as HTMLInputElement;
+
 const resultsDiv = document.getElementById('results') as HTMLDivElement;
 searchInput.focus();
 
-function showSearchResults(results: Array<BitwardenItem>) {
-    resultsDiv.replaceChildren();
-    results.slice(0, 5).forEach((item) => {
-        const resultDiv = document.createElement('div');
-        resultDiv.classList.add('result');
-
-        const uri = new URL(item.login.uris[0].uri);
-        const icon = document.createElement('img');
-        icon.src = `https://icons.bitwarden.net/${uri.host}/icon.png`;
-        resultDiv.appendChild(icon);
-
-        const name = document.createElement('span');
-        name.classList.add('name');
-        name.textContent = item.name;
-        resultDiv.appendChild(name);
-
-        const username = document.createElement('span');
-        username.classList.add('username');
-        username.textContent = item.login.username;
-        resultDiv.appendChild(username);
-
-        resultsDiv.appendChild(resultDiv);
-    });
-}
-
-searchInput.addEventListener('input', () => {
-    window.bitwarden.search(searchInput.value).then((results) => {
+function search(query: string) {
+    window.bitwarden.search(query).then((results) => {
         if (searchInput.value !== results[1]) {
             return;
         }
-        showSearchResults(results[0]);
+        resultsDiv.replaceChildren();
+        for (const item of results[0]) {
+            if (item.login === undefined) { continue; }
+            if (item.name === undefined) { continue; }
+
+            const resultDiv = document.createElement('div');
+            resultDiv.classList.add('result');
+
+            const uri = new URL(item.login.uris?.[0]?.uri || 'https://example.com');
+            const icon = document.createElement('img');
+            icon.src = `https://icons.bitwarden.net/${uri.host}/icon.png`;
+            resultDiv.appendChild(icon);
+
+            const info = document.createElement('span');
+            info.classList.add('info');
+            resultDiv.appendChild(info);
+
+            const name = document.createElement('span');
+            name.classList.add('name');
+            name.textContent = item.name;
+            info.appendChild(name);
+
+            const username = document.createElement('span');
+            username.classList.add('username');
+            username.textContent = item.login.username || '';
+            info.appendChild(username);
+
+            resultsDiv.appendChild(resultDiv);
+        }
     });
+}
+
+clearSearchButton.addEventListener('click', () => {
+    searchInput.value = '';
+    search('');
+    searchInput.focus();
 });
 
-window.bitwarden.search('').then((results) => {
-    showSearchResults(results[0]);
+searchInput.addEventListener('input', () => {
+    if (searchInput.value === '') {
+        clearSearchButton.classList.add('hidden');
+    } else {
+        clearSearchButton.classList.remove('hidden');
+    }
+    search(searchInput.value);
 });
 
 window.addEventListener('keyup', (event) => {
     if (event.key === 'Escape') {
         window.close();
     }
+    searchInput.focus();
 });
+
+if (navigator.userAgent.includes('Macintosh')) {
+    for (const element of document.getElementsByClassName('ctrl')) {
+        element.textContent = '⌘';
+    }
+}
+
+search('');

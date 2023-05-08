@@ -4,9 +4,33 @@
     <meta charset="UTF-8" />
     <title>Quickwarden Search</title>
     <link rel="stylesheet" href="./index.css">
+    <script src="https://kit.fontawesome.com/a3e64bf77f.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <input type="text" id="search" placeholder="Search vault"/>
+    <header id="top-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <i class="fa-solid fa-xmark hidden" id="clear-search"></i>
+      <input type="text" id="search" placeholder="Search vault"/>
+    </header>
     <div id="results"></div>
+    <footer>
+      <div class="interaction">
+        <div class="key ctrl">Ctrl</div>
+        <div class="key">C</div>
+        <p>Copy username</p>
+      </div>
+      <div class="interaction">
+        <div class="key ctrl">Ctrl</div>
+        <div class="key">Shift</div>
+        <div class="key">C</div>
+        <p>Copy password</p>
+      </div>
+      <div class="interaction">
+        <div class="key ctrl">Ctrl</div>
+        <div class="key">Alt</div>
+        <div class="key">C</div>
+        <p>Copy verification code</p>
+      </div>
+    </footer>
   </body>
 </html>
