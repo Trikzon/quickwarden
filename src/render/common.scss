@@ -20,6 +20,9 @@ body {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 header {
