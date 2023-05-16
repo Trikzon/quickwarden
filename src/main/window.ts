@@ -20,11 +20,15 @@ export function openLogin() {
     if (isWindowOpen()) {
         window?.focus();
     } else {
-        openWindow({
+        if (openWindow({
             width: 800,
             height: 600,
             titleBarStyle: "hiddenInset"
-        });
+        })) {
+            window.once("ready-to-show", () => {
+                window?.show();
+            });
+        }
         window.loadURL(LOGIN_WEBPACK_ENTRY);
     }
 }
@@ -49,13 +53,17 @@ export function openSearch(sessionKey: string = null) {
         height: 300,
         movable: false,
         minimizable: false,
-        // alwaysOnTop: true,
+        // TODO: See if setting the window type to "toolbar" works on Windows and Linux.
+        type: process.platform === "darwin" ? "panel" : "normal",
+        alwaysOnTop: true,
     })) {
+        window.once("ready-to-show", () => {
+            window?.showInactive();
+        });
         window.on("blur", () => {
             window.close();
         });
     }
-
     window.loadURL(SEARCH_WEBPACK_ENTRY);
 }
 
@@ -73,17 +81,13 @@ function openWindow(options: BrowserWindowConstructorOptions): boolean {
         ...options
     });
 
-    window.once("ready-to-show", () => {
-        window?.show();
-    });
-
-    window.once("show", () => {
-        window?.focus();
-    });
-
     window.webContents.setWindowOpenHandler(({ url }) => {
         shell.openExternal(url);
         return { action: "deny" };
+    });
+
+    window.on("show", () => {
+        window?.focus();
     });
 
     return true;
