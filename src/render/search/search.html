@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quickwarden Search</title>
+    <script src="https://kit.fontawesome.com/a3e64bf77f.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header>
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <i class="fa-solid fa-xmark hidden" id="clear-search"></i>
+      <input type="text" name="search" id="search" placeholder="Search vault">
+    </header>
+    <div id="content"></div>
+    <div class="hidden" id="no-results">
+      <p>There are no items to list.</p>
+    </div>
+  </body>
+  <footer>
+    <div class="interaction" id="username-interaction">
+      <div class="key ctrl">Ctrl</div>
+      <div class="key">C</div>
+      <p>Copy username</p>
+    </div>
+    <div class="interaction" id="password-interaction">
+      <div class="key ctrl">Ctrl</div>
+      <div class="key">Shift</div>
+      <div class="key">C</div>
+      <p>Copy password</p>
+    </div>
+    <div class="interaction" id="totp-interaction">
+      <div class="key ctrl">Ctrl</div>
+      <div class="key alt">Alt</div>
+      <div class="key">C</div>
+      <p>Copy verification code</p>
+    </div>
+  </footer>
+</html>

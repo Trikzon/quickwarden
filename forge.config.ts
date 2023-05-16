@@ -20,20 +20,20 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            name: 'login_popup',
-            html: './src/login/index.html',
-            js: './src/login/index.ts',
+            name: 'render',
             preload: {
-              js: './src/preload.ts',
+              js: './src/render/preload.ts'
             }
           },
           {
-            name: 'search_popup',
-            html: './src/search/index.html',
-            js: './src/search/index.ts',
-            preload: {
-              js: './src/preload.ts',
-            }
+            name: 'login',
+            html: './src/render/login/login.html',
+            js: './src/render/login/login.ts'
+          },
+          {
+            name: 'search',
+            html: './src/render/search/search.html',
+            js: './src/render/search/search.ts'
           }
         ],
       },

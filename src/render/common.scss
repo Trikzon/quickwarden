@@ -1,0 +1,47 @@
+:root {
+    --blue: #165ddc;
+    --dark-blue: #134db7;
+    --placeholder: #afc8f7;
+}
+
+@font-face {
+    font-family: OpenSans;
+    src: url(OpenSans-VariableFont_wdth\,wght.ttf);
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'OpenSans';
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+header {
+    background-color: var(--blue);
+    border-bottom: 1px solid var(--dark-blue);
+    min-height: 3rem;
+
+    flex-shrink: 0;
+}
+
+#content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}

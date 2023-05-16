@@ -1,0 +1,94 @@
+import { BrowserWindow, BrowserWindowConstructorOptions, shell } from 'electron';
+import { getSessionKey, setSessionKey } from './session';
+
+declare const RENDER_PRELOAD_WEBPACK_ENTRY: string;
+declare const LOGIN_WEBPACK_ENTRY: string;
+declare const SEARCH_WEBPACK_ENTRY: string;
+
+let window: BrowserWindow | null = null;
+
+export function openLoginOrSearch() {
+    if (getSessionKey() === null) {
+        openLogin();
+    } else {
+        openSearch();
+    }
+}
+
+export function openLogin() {
+    setSessionKey(null);
+    if (isWindowOpen()) {
+        window?.focus();
+    } else {
+        openWindow({
+            width: 800,
+            height: 600,
+            titleBarStyle: "hiddenInset"
+        });
+        window.loadURL(LOGIN_WEBPACK_ENTRY);
+    }
+}
+
+export function openSearch(sessionKey: string = null) {
+    if (sessionKey) {
+        setSessionKey(sessionKey);
+    }
+    
+    // If the window is open, always close it before opening the search page.
+    // However, if the search page is already open, don't re-open it.
+    if (isWindowOpen()) {
+        const url = window.webContents.getURL();
+        window.close();
+        if (url === SEARCH_WEBPACK_ENTRY) {
+            return;
+        }
+    }
+
+    if (openWindow({
+        width: 600,
+        height: 300,
+        movable: false,
+        minimizable: false,
+        // alwaysOnTop: true,
+    })) {
+        window.on("blur", () => {
+            window.close();
+        });
+    }
+
+    window.loadURL(SEARCH_WEBPACK_ENTRY);
+}
+
+function openWindow(options: BrowserWindowConstructorOptions): boolean {
+    window = new BrowserWindow({
+        center: true,
+        resizable: false,
+        maximizable: false,
+        fullscreenable: false,
+        show: false,
+        frame: false,
+        webPreferences: {
+            preload: RENDER_PRELOAD_WEBPACK_ENTRY
+        },
+        ...options
+    });
+
+    window.once("ready-to-show", () => {
+        window?.show();
+    });
+
+    window.once("show", () => {
+        window?.focus();
+    });
+
+    window.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url);
+        return { action: "deny" };
+    });
+
+    return true;
+}
+
+function isWindowOpen(): boolean {
+    return window !== null && !window.isDestroyed();
+}

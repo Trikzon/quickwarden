@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quickwarden Login</title>
+    <script src="https://kit.fontawesome.com/a3e64bf77f.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header></header>
+    <div id="content">
+      <div id="logo">
+        <p><i class="fa-solid fa-jet-fighter-up"></i><b>quick</b>warden</p>
+      </div>
+      <p id="description">Log in or create a new account to quickly access your secure vault.</p>
+      <label for="client-id" class="input-box">
+        Client ID
+        <input type="text" id="client-id" class="credential-input">
+      </label>
+      <label for="client-secret" class="input-box">
+        Client secret
+        <input type="text" id="client-secret" class="credential-input">
+      </label>
+      <label for="password" class="input-box">
+        Master password
+        <input type="password" id="password" class="credential-input">
+      </label>
+      <div class="checkbox">
+        <input type="checkbox" id="remember-api-key">
+        <label for="remember-api-key">Remember client ID and client secret</label>
+      </div>
+      <button id="login" disabled>Login</button>
+      <div id="create-account">
+        <p>New around here?</p>
+        <a href="https://vault.bitwarden.com/#/register" target="_blank">Create account</a>
+      </div>
+    </div>
+    <footer>
+      <p id="disclaimer">NOT AN OFFICIAL BITWARDEN PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH BITWARDEN.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+header {
+    i {
+        position: absolute;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        color: var(--placeholder);
+    }
+
+    i.fa-xmark {
+        color: #fff;
+        right: 0rem;
+        cursor: pointer;
+    }
+
+    #search {
+        background-color: var(--dark-blue);
+        margin: 0.5rem;
+        padding: 0.25rem 2rem;
+        font-size: 1.25rem;
+        width: calc(100% - 5rem);
+        border: 0;
+        border-radius: 0.25rem;
+        color: #fff;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            color: var(--placeholder);
+        }
+    }
+}
+
+#content {
+    overflow: auto;
+    min-height: 2em;
+
+    .bitwarden-item {
+        cursor: pointer;
+
+        display: flex;
+        flex-direction: row;
+
+        &:hover {
+            background-color: #fbfbfb;
+        }
+
+        &.selected {
+            background-color: #fbfbfb;
+        }
+
+        .flag {
+            min-width: 0.5rem;
+        }
+        &.selected > .flag {
+            background-color: var(--blue);
+        }
+
+        .container {
+            padding: 0.5rem;
+            width: 100%;
+
+            display: flex;
+            flex-direction: row;
+
+            img {
+                width: 1.5rem;
+                height: 1.5rem;
+                border-radius: 0.25rem;
+                margin: auto 0.5rem auto 0;
+            }
+
+            .info {
+                display: flex;
+                flex-direction: column;
+
+                .username {
+                    color: #777;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+#no-results {
+    text-align: center;
+
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    p {
+        margin: auto;
+    }
+}
+
+footer {
+    background-color: #f8f8f8;
+    border-top: 1px solid #ddd;
+
+    display: flex;
+    flex-direction: row;
+
+    .interaction {
+        margin: 0.5rem 0.25rem;
+        text-align: center;
+        font-size: 12px;
+        cursor: not-allowed;
+        color: #777;
+
+        flex-grow: 1;
+        display: flex;
+
+        &.enabled {
+            cursor: pointer;
+            color: #000;
+        }
+
+        .key {
+            border: 1px solid #ddd;
+            padding: 0.15rem 0.3rem;
+            margin-right: 0.1rem;
+            border-radius: 0.25rem;
+            background-color: #fff;
+        }
+
+        p {
+            margin: auto auto auto 0.25rem;
+        }
+    }
+}
