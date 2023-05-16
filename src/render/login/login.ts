@@ -19,7 +19,7 @@ if (window.localStorage.getItem("client_id") !== null && window.localStorage.get
     clientIdInput.focus();
 }
 
-loginButton.addEventListener("click", () => {
+function login() {
     window.ipc.loginWithApi(clientIdInput.value, clientSecretInput.value, passwordInput.value).catch((error: string) => {
         loginButton.disabled = false;
         clientIdInput.disabled = false;
@@ -41,10 +41,17 @@ loginButton.addEventListener("click", () => {
     clientIdInput.disabled = true;
     clientSecretInput.disabled = true;
     passwordInput.disabled = true;
-});
+}
+
+loginButton.addEventListener("click", () => { login(); });
 
 for (const element of document.getElementsByClassName("credential-input")) {
     element.addEventListener("input", () => {
         loginButton.disabled = clientIdInput.value === "" || clientSecretInput.value === "" || passwordInput.value === "";
+    });
+    element.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key === "Enter" && !loginButton.disabled) {
+            login();
+        }
     });
 }
