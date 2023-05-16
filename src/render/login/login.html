@@ -18,11 +18,17 @@
       </label>
       <label for="client-secret" class="input-box">
         Client secret
-        <input type="text" id="client-secret" class="credential-input">
+        <div class="input-box-row">
+          <input type="password" id="client-secret" class="credential-input">
+          <i class="fa-regular fa-eye eye-icon" id="client-secret-toggle"></i>
+        </div>
       </label>
       <label for="password" class="input-box">
         Master password
-        <input type="password" id="password" class="credential-input">
+        <div class="input-box-row">
+          <input type="password" id="password" class="credential-input">
+          <i class="fa-regular fa-eye eye-icon" id="password-toggle"></i>
+        </div>
       </label>
       <div class="checkbox">
         <input type="checkbox" id="remember-api-key">

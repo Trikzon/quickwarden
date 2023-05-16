@@ -27,7 +27,6 @@ header {
         max-width: 325px;
         margin: 0.5rem auto;
         text-align: center;
-        font-weight: 500;
     }
 
     .input-box {
@@ -70,6 +69,21 @@ header {
 
             &:disabled {
                 cursor: not-allowed;
+            }
+        }
+
+        .input-box-row {
+            display: flex;
+            flex-direction: row;
+
+            input {
+                flex: 1;
+            }
+
+            .eye-icon {
+                color: var(--blue);
+                font-size: 14px;
+                cursor: pointer;
             }
         }
     }
@@ -123,6 +137,8 @@ header {
 
         a {
             margin: 0 auto;
+            text-decoration: none;
+            color: var(--blue);
         }
     }
 }

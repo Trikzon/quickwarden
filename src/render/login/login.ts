@@ -3,7 +3,9 @@ import './login.scss';
 
 const clientIdInput = document.getElementById("client-id") as HTMLInputElement;
 const clientSecretInput = document.getElementById("client-secret") as HTMLInputElement;
+const clientSecretToggle = document.getElementById("client-secret-toggle") as HTMLElement;
 const passwordInput = document.getElementById("password") as HTMLInputElement;
+const passwordToggle = document.getElementById("password-toggle") as HTMLElement;
 
 const rememberApiKeyCheckbox = document.getElementById("remember-api-key") as HTMLInputElement;
 
@@ -55,3 +57,23 @@ for (const element of document.getElementsByClassName("credential-input")) {
         }
     });
 }
+
+clientSecretToggle.addEventListener("click", () => {
+    if (clientSecretInput.type === "password") {
+        clientSecretInput.type = "text";
+        clientSecretToggle.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        clientSecretInput.type = "password";
+        clientSecretToggle.classList.replace("fa-eye-slash", "fa-eye");
+    }
+});
+
+passwordToggle.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        passwordToggle.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        passwordToggle.classList.replace("fa-eye-slash", "fa-eye");
+    }
+});
