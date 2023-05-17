@@ -1,6 +1,6 @@
 {
   "name": "quickwarden",
-  "productName": "quickwarden",
+  "productName": "Quickwarden",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
@@ -14,7 +14,7 @@
   "keywords": [],
   "author": {
     "name": "Dion Tryban",
-    "email": "github@diontryban.com"
+    "email": "me@diontryban.com"
   },
   "license": "MIT",
   "devDependencies": {

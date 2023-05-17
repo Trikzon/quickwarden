@@ -73,6 +73,8 @@ function openWindow(options: BrowserWindowConstructorOptions): boolean {
         resizable: false,
         maximizable: false,
         fullscreenable: false,
+        title: "Quickwarden",
+        icon: process.platform !== "darwin" && process.platform !== "win32" ? "/src/assets/icons/icon-512x512.png" : undefined,
         show: false,
         frame: false,
         webPreferences: {
