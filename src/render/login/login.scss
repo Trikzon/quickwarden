@@ -1,5 +1,5 @@
 body {
-    background-color: #ededed;
+    background-color: var(--background);
 }
 
 header {
@@ -30,7 +30,7 @@ header {
     }
 
     .input-box {
-        background-color: #fff;
+        background-color: white;
         margin: 0.5rem auto;
         padding: 0.5rem 0.75rem;
         border-radius: 0.25rem;
@@ -38,23 +38,22 @@ header {
         width: 325px;
 
         font-size: 0.75rem;
-        color: #777;
+        color: var(--blend-text);
 
         display: flex;
         flex-direction: column;
 
         &:hover {
-            background-color: #fbfbfb;
+            background-color: var(--hover-background);
         }
 
         &:has(input:focus) {
-            background-color: #fbfbfb;
+            background-color: var(--hover-background);
         }
 
         &:has(input:disabled) {
-            background-color: #f5f5f5;
-            border-color: #bebebe;
-            color: #bebebe;
+            background-color: var(--disabled-background);
+            color: var(--disabled-text);
             cursor: not-allowed;
         }
 
@@ -81,7 +80,7 @@ header {
             }
 
             .eye-icon {
-                color: var(--blue);
+                color: var(--primary);
                 font-size: 14px;
                 cursor: pointer;
             }
@@ -100,27 +99,26 @@ header {
     }
 
     button {
-        background-color: #fff;
+        background-color: white;
         width: 350px;
         margin: 0.25rem auto;
         padding: 0.5rem 0.75rem;
-        color: var(--blue);
+        color: var(--primary);
         border: 0;
         border-radius: 0.25rem;
-        border: 1px solid #bebebe;
+        border: 1px solid var(--button-border);
         font-size: 14px;
         font-weight: 800;
         cursor: pointer;
 
         &:hover {
-            background-color: #fbfbfb;
-            border-color: #777;
+            background-color: var(--hover-background);
+            border-color: var(--disabled-text);
         }
 
         &:disabled {
-            background-color: #f5f5f5;
-            border-color: #bebebe;
-            color: #bebebe;
+            background-color: var(--disabled-background);
+            color: var(--disabled-text);
             cursor: not-allowed;
         }
     }
@@ -139,7 +137,7 @@ header {
         a {
             margin: 0 auto;
             text-decoration: none;
-            color: var(--blue);
+            color: var(--primary);
         }
     }
 }
@@ -147,6 +145,6 @@ header {
 footer {
     p {
         margin: auto;
-        color: #777;
+        color: var(--blend-text);
     }
 }

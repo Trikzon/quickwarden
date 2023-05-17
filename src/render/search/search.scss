@@ -3,31 +3,31 @@ header {
         position: absolute;
         padding: 0.5rem;
         margin: 0.5rem;
-        color: var(--placeholder);
+        color: var(--contrast-text);
     }
 
     i.fa-xmark {
-        color: #fff;
+        color: white;
         right: 0rem;
         cursor: pointer;
     }
 
     #search {
-        background-color: var(--dark-blue);
+        background-color: var(--secondary);
         margin: 0.5rem;
         padding: 0.25rem 2rem;
         font-size: 1.25rem;
         width: calc(100% - 5rem);
         border: 0;
         border-radius: 0.25rem;
-        color: #fff;
+        color: white;
 
         &:focus {
             outline: none;
         }
 
         &::placeholder {
-            color: var(--placeholder);
+            color: var(--contrast-text);
         }
     }
 }
@@ -43,11 +43,11 @@ header {
         flex-direction: row;
 
         &:hover {
-            background-color: #fbfbfb;
+            background-color: var(--hover-background);
         }
 
         &.selected {
-            background-color: #fbfbfb;
+            background-color: var(--hover-background);
         }
 
         .flag {
@@ -76,7 +76,7 @@ header {
                 flex-direction: column;
 
                 .username {
-                    color: #777;
+                    color: var(--blend-text);
                     font-size: 14px;
                 }
             }
@@ -97,8 +97,8 @@ header {
 }
 
 footer {
-    background-color: #f8f8f8;
-    border-top: 1px solid #ddd;
+    background-color: var(--background);
+    border-top: 1px solid var(--disabled-text);
 
     display: flex;
     flex-direction: row;
@@ -108,22 +108,22 @@ footer {
         text-align: center;
         font-size: 12px;
         cursor: not-allowed;
-        color: #777;
+        color: var(--blend-text);
 
         flex-grow: 1;
         display: flex;
 
         &.enabled {
             cursor: pointer;
-            color: #000;
+            color: black;
         }
 
         .key {
-            border: 1px solid #ddd;
+            border: 1px solid var(--button-border);
             padding: 0.15rem 0.3rem;
             margin-right: 0.1rem;
             border-radius: 0.25rem;
-            background-color: #fff;
+            background-color: white;
         }
 
         p {
