@@ -23,7 +23,9 @@ if (window.localStorage.getItem("client_id") !== null && window.localStorage.get
 
 function login() {
     window.ipc.loginWithApi(clientIdInput.value, clientSecretInput.value, passwordInput.value).catch((error: string) => {
-        // TODO: Display error message to user.
+        loginButton.textContent = error;
+        loginButton.classList.add("error");
+
         loginButton.disabled = false;
         clientIdInput.disabled = false;
         clientSecretInput.disabled = false;
@@ -51,6 +53,8 @@ loginButton.addEventListener("click", () => { login(); });
 for (const element of document.getElementsByClassName("credential-input")) {
     element.addEventListener("input", () => {
         loginButton.disabled = clientIdInput.value === "" || clientSecretInput.value === "" || passwordInput.value === "";
+        loginButton.classList.remove("error");
+        loginButton.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Log in'
     });
     element.addEventListener("keydown", (event: KeyboardEvent) => {
         if (event.key === "Enter" && !loginButton.disabled) {

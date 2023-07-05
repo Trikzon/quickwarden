@@ -123,6 +123,10 @@ header {
         }
     }
 
+    #login.error {
+        color: var(--error);
+    }
+
     #create-account {
         margin: 0.25rem auto;
 

@@ -14,8 +14,10 @@ let cachedItems: Array<BitwardenItem> | null = null;
  */
 export async function loginWithApi(clientId: string, clientSecret: string, password: string): Promise<string | string> {
     await logout();
-    await bwPre(`BW_CLIENTID=${clientId} BW_CLIENTSECRET=${clientSecret}`, "login --apikey").catch((_error) => {
-        // TODO: Send error to window console log.
+    await bwPre(`BW_CLIENTID=${clientId} BW_CLIENTSECRET=${clientSecret}`, "login --apikey").catch((error: ExecException | string | null) => {
+        if (error && typeof error !== "string" && error.code && error.code === 127) {
+            return Promise.reject("Bitwarden CLI is not installed.");
+        }
         return Promise.reject("Client ID or client secret is invalid. Try again.");
     });
     return await bwPre(`BW_PASSWORD=${password}`, "unlock --raw --passwordenv BW_PASSWORD").catch((_error) => {
@@ -79,7 +81,7 @@ async function bwPre(preCommand: string, command: string): Promise<string> {
             `${preCommand} bw ${command}`.trim(),
             { timeout: 10000 },
             (error: ExecException | null, stdout: string, stderr: string) => {
-                if (error) { reject(error?.message.trim()); }
+                if (error) { reject(error); }
                 if (stderr) { reject(stderr.trim()); }
                 resolve(stdout.trim());
             }
