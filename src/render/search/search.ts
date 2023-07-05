@@ -1,5 +1,6 @@
 import { BitwardenItemElement } from "./elements/BitwardenItemElement";
 import { BitwardenItem } from "../../external/bitwarden";
+import totp from "totp-generator";
 
 import "../common.scss";
 import "./search.scss";
@@ -44,7 +45,7 @@ if (navigator.userAgent.includes("Macintosh")) {
         element.textContent = "⌘";
     }
     for (const element of document.getElementsByClassName("alt")) {
-        element.textContent = "⌥";
+        element.textContent = "⌃";
     }
 }
 
@@ -94,7 +95,9 @@ function copyTotp() {
     if (selectedIndex >= 0 && selectedIndex < itemElements.length) {
         const item = itemElements[selectedIndex];
         if (item.hasTotp()) {
-            window.ipc.writeToClipboard(item.getItem().login.totp);
+            const totpKey = item.getItem().login.totp.split(" ").join("");
+            const token = totp(totpKey);
+            window.ipc.writeToClipboard(token);
             window.close();
         }
     }
@@ -105,6 +108,7 @@ passwordInteractionDiv.addEventListener("click", copyPassword);
 totpInteractionDiv.addEventListener("click", copyTotp);
 
 window.addEventListener("keydown", (event: KeyboardEvent) => {
+    console.log(event);
     if (event.key === "Escape") {
         window.close();
     } else if (event.key === "ArrowDown") {
@@ -115,17 +119,19 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
         if (selectedIndex > 0) {
             select(selectedIndex - 1);
         }
-    } else if (event.key === 'c' && event.shiftKey && ctrlOrMeta(event)) {
-        copyPassword();
-    } else if (event.key === 'c' && event.altKey && ctrlOrMeta(event)) {
-        copyTotp();
-    } else if (event.key === 'c' && ctrlOrMeta(event)) {
-        copyUsername();
+    } else if ((isMacOS() ? event.metaKey : event.ctrlKey) && event.key === 'c') {
+        if (event.shiftKey) {
+            copyPassword();
+        } else if (isMacOS() ? event.ctrlKey : event.altKey) {
+            copyTotp();
+        } else {
+            copyUsername();
+        }
     }
 });
 
-function ctrlOrMeta(event: KeyboardEvent): boolean {
-    return navigator.userAgent.includes("Macintosh") ? event.metaKey : event.ctrlKey;
+function isMacOS(): boolean {
+    return navigator.userAgent.includes("Macintosh");
 }
 
 async function searchItems(query: string): Promise<Array<BitwardenItem>> {
