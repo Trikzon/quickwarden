@@ -8,6 +8,8 @@ declare global {
             openSearch(sessionKey: string): void;
             listItems(): Promise<Array<BitwardenItem> | string>;
             writeToClipboard(text: string): void;
+            setLastSearch(lastSearch: string, index: number): void;
+            getLastSearch(): Promise<[string, number] | null>;
         }
     }
 }
@@ -24,6 +26,12 @@ contextBridge.exposeInMainWorld("ipc", {
     },
     writeToClipboard(text: string) {
         ipcRenderer.send("writeToClipboard", text);
+    },
+    setLastSearch(value: string, index: number) {
+        ipcRenderer.send("setLastSearch", value, index);
+    },
+    async getLastSearch(): Promise<[string, number] | null> {
+        return invoke("getLastSearch");
     }
 });
 

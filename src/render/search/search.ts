@@ -17,7 +17,11 @@ const itemElements: Array<BitwardenItemElement> = [];
 let selectedIndex = 0;
 
 searchInput.focus();
-search("");
+window.ipc.getLastSearch().then((lastSearch) => {
+    let [lastSearchValue, lastSearchIndex] = lastSearch ?? ["", 0];
+    searchInput.value = lastSearchValue;
+    search(lastSearchValue, lastSearchIndex);
+});
 
 searchInput.addEventListener("input", () => {
     if (searchInput.value === "") {
@@ -75,8 +79,7 @@ function copyUsername() {
     if (selectedIndex >= 0 && selectedIndex < itemElements.length) {
         const item = itemElements[selectedIndex];
         if (item.hasUsername()) {
-            window.ipc.writeToClipboard(item.getItem().login.username);
-            window.close();
+            copySaveAndExit(item.getItem().login.username);
         }
     }
 }
@@ -85,8 +88,7 @@ function copyPassword() {
     if (selectedIndex >= 0 && selectedIndex < itemElements.length) {
         const item = itemElements[selectedIndex];
         if (item.hasPassword()) {
-            window.ipc.writeToClipboard(item.getItem().login.password);
-            window.close();
+            copySaveAndExit(item.getItem().login.password);
         }
     }
 }
@@ -97,10 +99,15 @@ function copyTotp() {
         if (item.hasTotp()) {
             const totpKey = item.getItem().login.totp.split(" ").join("");
             const token = totp(totpKey);
-            window.ipc.writeToClipboard(token);
-            window.close();
+            copySaveAndExit(token);
         }
     }
+}
+
+function copySaveAndExit(textToCopy: string) {
+    window.ipc.setLastSearch(searchInput.value, selectedIndex);
+    window.ipc.writeToClipboard(textToCopy);
+    window.close();
 }
 
 usernameInteractionDiv.addEventListener("click", copyUsername);
@@ -108,7 +115,6 @@ passwordInteractionDiv.addEventListener("click", copyPassword);
 totpInteractionDiv.addEventListener("click", copyTotp);
 
 window.addEventListener("keydown", (event: KeyboardEvent) => {
-    console.log(event);
     if (event.key === "Escape") {
         window.close();
     } else if (event.key === "ArrowDown") {
@@ -135,8 +141,7 @@ function isMacOS(): boolean {
 }
 
 async function searchItems(query: string): Promise<Array<BitwardenItem>> {
-    return window.ipc.listItems().catch((error: string) => {
-        console.log(error);
+    return window.ipc.listItems().catch((_error: string) => {
         return [];
     }).then((items: Array<BitwardenItem>) => {
         const results: Array<BitwardenItem> = [];
@@ -165,7 +170,7 @@ async function searchItems(query: string): Promise<Array<BitwardenItem>> {
     });
 }
 
-function search(query: string) {
+function search(query: string, index: number = 0) {
     searchItems(query).then((items: Array<BitwardenItem>) => {
         if (searchInput.value !== query) { return; }
 
@@ -190,6 +195,6 @@ function search(query: string) {
             }
         }
 
-        select(0);
+        select(index);
     });
 }

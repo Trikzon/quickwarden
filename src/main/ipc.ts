@@ -1,7 +1,7 @@
 import { clipboard, ipcMain } from 'electron';
 import { listItems, loginWithApi } from '../external/bitwarden';
 import { openSearch } from './window';
-import { getSessionKey } from './session';
+import { getLastSearch, getSessionKey, setLastSearch } from './session';
 
 export function initIpc() {
     ipcMain.on("openSearch", (_event, sessionKey: string) => {
@@ -15,5 +15,11 @@ export function initIpc() {
     });
     ipcMain.on("writeToClipboard", (_event, text: string) => {
         clipboard.writeText(text);
+    });
+    ipcMain.on("setLastSearch", (_event, value: string, index: number) => {
+        setLastSearch(value, index);
+    });
+    ipcMain.handle("getLastSearch", async (_event) => {
+        return getLastSearch();
     });
 }
