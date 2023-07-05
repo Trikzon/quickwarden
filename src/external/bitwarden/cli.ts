@@ -15,6 +15,7 @@ let cachedItems: Array<BitwardenItem> | null = null;
 export async function loginWithApi(clientId: string, clientSecret: string, password: string): Promise<string | string> {
     await logout();
     await bwPre(`BW_CLIENTID=${clientId} BW_CLIENTSECRET=${clientSecret}`, "login --apikey").catch((_error) => {
+        // TODO: Send error to window console log.
         return Promise.reject("Client ID or client secret is invalid. Try again.");
     });
     return await bwPre(`BW_PASSWORD=${password}`, "unlock --raw --passwordenv BW_PASSWORD").catch((_error) => {
@@ -75,7 +76,7 @@ async function bw(command: string): Promise<string> {
 async function bwPre(preCommand: string, command: string): Promise<string> {
     return new Promise((resolve, reject) => {
         exec(
-            `${preCommand} npx --no bw ${command}`.trim(),
+            `${preCommand} bw ${command}`.trim(),
             { timeout: 10000 },
             (error: ExecException | null, stdout: string, stderr: string) => {
                 if (error) { reject(error?.message.trim()); }

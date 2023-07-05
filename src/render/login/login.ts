@@ -23,6 +23,7 @@ if (window.localStorage.getItem("client_id") !== null && window.localStorage.get
 
 function login() {
     window.ipc.loginWithApi(clientIdInput.value, clientSecretInput.value, passwordInput.value).catch((error: string) => {
+        // TODO: Display error message to user.
         loginButton.disabled = false;
         clientIdInput.disabled = false;
         clientSecretInput.disabled = false;

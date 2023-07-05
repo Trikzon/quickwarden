@@ -9,6 +9,9 @@ if (require('electron-squirrel-startup')) {
 }
 
 app.on('ready', () => {
+    if (process.platform !== "win32") {
+        process.env.PATH = process.env.PATH + ":/usr/local/bin:/opt/homebrew/bin";
+    }
     initIpc();
     initShortcuts();
 
