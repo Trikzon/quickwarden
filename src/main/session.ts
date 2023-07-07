@@ -1,3 +1,5 @@
+import { logout } from "../external/bitwarden";
+
 let sessionKey: string | null = null;
 
 export function getSessionKey(): string | null {
@@ -6,6 +8,13 @@ export function getSessionKey(): string | null {
 
 export function setSessionKey(_sessionKey: string | null) {
     sessionKey = _sessionKey;
+}
+
+export function invalidateSessionKey() {
+    if (sessionKey !== null) {
+        logout();
+        sessionKey = null;
+    }
 }
 
 let lastSearch: string | null = null;

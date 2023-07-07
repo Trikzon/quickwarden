@@ -1,5 +1,6 @@
 import { BrowserWindow, BrowserWindowConstructorOptions, shell } from 'electron';
 import { getSessionKey, setSessionKey } from './session';
+import { sync } from "../external/bitwarden";
 
 declare const RENDER_PRELOAD_WEBPACK_ENTRY: string;
 declare const LOGIN_WEBPACK_ENTRY: string;
@@ -47,6 +48,8 @@ export function openSearch(sessionKey: string = null) {
             return;
         }
     }
+
+    sync(getSessionKey());
 
     if (openWindow({
         width: 600,
