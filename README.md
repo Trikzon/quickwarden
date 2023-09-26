@@ -1,5 +1,5 @@
 # Quickwarden
-A companion utilty for the [Bitwarden](https://bitwarden.com) Desktop Client that creates a popup window to quickly copy usernames, passwords, and verification codes while inside any other app.
+A companion utility for the [Bitwarden](https://bitwarden.com) Desktop Client that creates a popup window to quickly copy usernames, passwords, and verification codes while inside any other app.
 
 Inspired by 1Password's [Quick Access](https://support.1password.com/quick-access/) feature.
 
